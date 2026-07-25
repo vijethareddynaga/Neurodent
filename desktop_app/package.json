@@ -1,0 +1,23 @@
+{
+  "name": "neurodent-desktop-app",
+  "version": "1.0.0",
+  "description": "NeuroDent AI Desktop Application for Laptop (Windows/Mac/Linux)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "neurodent",
+    "desktop-app",
+    "electron",
+    "dental-ai"
+  ],
+  "author": "vijethareddynaga",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.2.0"
+  }
+}
