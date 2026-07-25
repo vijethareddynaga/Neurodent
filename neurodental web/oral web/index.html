@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDent AI - Dental Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="splash-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="NeuroDent AI Logo" style="width: 120px; height: 120px; border-radius: 24px; box-shadow: 0 10px 30px rgba(33, 107, 222, 0.25);">
+        </div>
+        <h1 class="brand-name">NeuroDent AI</h1>
+        <p class="tagline">AI-Powered Dental Intelligence</p>
+        
+        <!-- Premium modern loading spinner -->
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth boot transition to login page
+        setTimeout(() => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 500);
+        }, 2200);
+    </script>
+</body>
+</html>

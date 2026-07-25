@@ -1,0 +1,1457 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #F8FAFC;
+    color: #0F172A;
+    overflow: hidden;
+}
+
+/* Full-Screen Desktop Flex Grid Layout */
+.desktop-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* 1. Left Sticky Navigation Sidebar */
+.sidebar {
+    width: 260px;
+    height: 100%;
+    background: #0A192F;
+    color: #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(226, 232, 240, 0.05);
+    cursor: pointer;
+}
+
+.sidebar-brand {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.05);
+}
+
+.logo-container-small {
+    filter: drop-shadow(0 4px 8px rgba(33, 107, 222, 0.25));
+}
+
+.sidebar-brand h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #38BDF8 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.menu-item svg {
+    color: #94A3B8;
+    transition: all 0.2s;
+}
+
+.menu-item:hover, .menu-item.active {
+    background: rgba(33, 107, 222, 0.15);
+    color: #38BDF8;
+}
+
+.menu-item:hover svg, .menu-item.active svg {
+    color: #38BDF8;
+    transform: scale(1.05);
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(226, 232, 240, 0.05);
+}
+
+.doctor-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-large {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+}
+
+.doctor-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.doc-status {
+    font-size: 12px;
+    color: #34D399;
+}
+
+/* 2. Main Desktop Workspace */
+.main-workspace {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Topbar Header */
+.topbar {
+    height: 70px;
+    padding: 0 32px;
+    background: white;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.topbar-left h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 2px 0;
+}
+
+.current-date {
+    font-size: 12px;
+    color: #64748B;
+    margin: 0;
+    font-weight: 500;
+}
+
+.notification-badge-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #E2E8F0;
+    background: white;
+    color: #475569;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.notification-badge-btn:hover {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.red-dot {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background: #EF4444;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Content Area View */
+.content-view {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.view-panel {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Three-Column Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.metric-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.metric-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.metric-icon-wrapper.bg-blue {
+    background: #EFF6FF;
+    color: #216BDE;
+}
+
+.metric-icon-wrapper.bg-teal {
+    background: #F0FDFA;
+    color: #0D9488;
+}
+
+.metric-icon-wrapper.bg-red {
+    background: #FEF2F2;
+    color: #EF4444;
+}
+
+.metric-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 6px;
+}
+
+.metric-subtext {
+    font-size: 12px;
+    color: #64748B;
+    margin: 0;
+    font-weight: 500;
+}
+
+.trend-green {
+    color: #10B981;
+    font-weight: 600;
+}
+
+.trend-red {
+    color: #EF4444;
+    font-weight: 600;
+}
+
+/* Two-Column Desktop Workspace Grid */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.panel {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #E2E8F0;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 20px 0;
+}
+
+/* Quick Action Panel Card styling */
+.action-card-desktop {
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: linear-gradient(135deg, #216BDE 0%, #149591 100%);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(33, 107, 222, 0.15);
+}
+
+.action-card-desktop:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 25px -5px rgba(33, 107, 222, 0.25);
+}
+
+.action-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px auto;
+}
+
+.action-card-desktop h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.action-card-desktop p {
+    font-size: 13px;
+    margin: 0;
+    opacity: 0.85;
+    line-height: 1.4;
+}
+
+/* Patient Data Table Column */
+.table-panel {
+    min-height: 380px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #E2E8F0;
+    font-size: 13px;
+    outline: none;
+    width: 200px;
+    transition: all 0.2s;
+}
+
+.search-box input:focus {
+    width: 260px;
+    border-color: #216BDE;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.desktop-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.desktop-table th {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748B;
+    border-bottom: 2px solid #F1F5F9;
+    background: #F8FAFC;
+}
+
+.desktop-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: #475569;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.desktop-table tr:hover {
+    background: #F8FAFC;
+}
+
+.text-bold {
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.text-primary {
+    color: #216BDE;
+    font-weight: 600;
+}
+
+.risk-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.badge-green {
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.badge-yellow {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.badge-red {
+    background: #FEE2E2;
+    color: #B91C1C;
+}
+
+.delete-patient-btn {
+    padding: 6px 12px;
+    border: 1px solid #FEE2E2;
+    border-radius: 8px;
+    background: white;
+    color: #EF4444;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-patient-btn:hover {
+    background: #EF4444;
+    color: white;
+    border-color: #EF4444;
+}
+
+/* Center Form Container (Multi-step Diagnostic Funnel) */
+.center-form-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+    box-sizing: border-box;
+}
+
+.desktop-form-card {
+    width: 100%;
+    max-width: 520px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #E2E8F0;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(10, 25, 47, 0.04);
+    box-sizing: border-box;
+}
+
+.form-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 16px;
+}
+
+.form-card-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+}
+
+.back-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #E2E8F0;
+    background: white;
+    color: #475569;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-arrow-btn:hover {
+    background: #F8FAFC;
+    color: #0F172A;
+    transform: translateX(-3px);
+}
+
+/* Patient Form specifics */
+.patient-desktop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.desktop-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.desktop-form-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.5px;
+}
+
+.desktop-form-group input, .desktop-form-group textarea {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid #E2E8F0;
+    font-size: 14px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.desktop-form-group input:focus, .desktop-form-group textarea:focus {
+    border-color: #216BDE;
+    box-shadow: 0 0 0 3px rgba(33, 107, 222, 0.08);
+}
+
+.desktop-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+}
+
+/* Gender Toggles (Android style but Desktop quality) */
+.gender-toggle-container {
+    display: flex;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 48px;
+}
+
+.gender-btn {
+    flex: 1;
+    border: none;
+    background: white;
+    color: #64748B;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.gender-btn.active {
+    background: #EFF6FF;
+    color: #216BDE;
+}
+
+.submit-form-btn {
+    margin-top: 16px;
+    padding: 16px;
+}
+
+/* Upload OPG Drag Area specific to desktop view */
+.desktop-upload-body {
+    width: 100%;
+}
+
+.desktop-dropzone {
+    border: 2px dashed #CBD5E1;
+    border-radius: 16px;
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #F8FAFC;
+    box-sizing: border-box;
+}
+
+.desktop-dropzone:hover, .desktop-dropzone.active {
+    border-color: #216BDE;
+    background: #F0F5FC;
+}
+
+.dropzone-icon {
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+.desktop-dropzone:hover .dropzone-icon {
+    transform: translateY(-4px);
+}
+
+.desktop-dropzone h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 8px 0;
+}
+
+.desktop-dropzone p {
+    font-size: 13px;
+    color: #64748B;
+    margin: 0 0 24px 0;
+    line-height: 1.4;
+}
+
+.dropzone-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.dropzone-btn {
+    padding: 10px 20px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: white;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.dropzone-btn:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+/* 4. VIEW: SCIENTIFIC CLINICAL REPORT WEB PAGE SCREEN */
+.report-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.report-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 16px;
+}
+
+.report-title-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.report-title-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+}
+
+.delete-report-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #FEE2E2;
+    background: white;
+    color: #EF4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-report-btn:hover {
+    background: #EF4444;
+    color: white;
+    border-color: #EF4444;
+}
+
+.report-split-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.report-left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.meter-card-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.meter-circle-large {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: conic-gradient(#10B981 0%, #10B981 6%, #F1F5F9 6% 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.08);
+}
+
+.meter-circle-large::before {
+    content: '';
+    position: absolute;
+    width: 144px;
+    height: 144px;
+    background: white;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.meter-percentage-val {
+    font-size: 38px;
+    font-weight: 700;
+    color: #0F172A;
+    z-index: 2;
+}
+
+.meter-percentage-sub {
+    font-size: 12px;
+    color: #64748B;
+    font-weight: 600;
+    z-index: 2;
+    margin-top: 2px;
+}
+
+.report-badge-container {
+    margin-top: 24px;
+}
+
+.report-status-badge {
+    padding: 8px 24px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.report-actions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.btn-pdf-save {
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #216BDE;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s;
+}
+
+.btn-pdf-save:hover {
+    opacity: 0.9;
+}
+
+.btn-share {
+    padding: 14px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: white;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.btn-share:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+.return-link-container {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.return-dash-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #216BDE;
+    text-decoration: none;
+}
+
+.return-dash-link:hover {
+    text-decoration: underline;
+}
+
+/* Scientific Report Right Panel Details */
+.report-right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card-report-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 16px 0;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 10px;
+}
+
+.patient-profile-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.patient-meta-item {
+    font-size: 14px;
+    color: #475569;
+}
+
+.meta-lbl {
+    font-weight: 600;
+    color: #64748B;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.meta-val {
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.report-surgical-note-box {
+    background: #F8FAFC;
+    border-left: 4px solid #10B981;
+    padding: 16px;
+    border-radius: 0 12px 12px 0;
+}
+
+.report-surgical-note-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.5;
+}
+
+/* Bullet findings */
+.ai-findings-list {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-findings-list li {
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.ai-findings-list li::marker {
+    color: #10B981;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #216BDE 0%, #149591 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.primary-btn:hover {
+    opacity: 0.95;
+}
+
+/* 5. VIEW: PATIENT REPORTS LIST SPECIFICS */
+.reports-list-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.reports-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+}
+
+.reports-count-badge {
+    font-size: 16px;
+    font-weight: 700;
+    color: #475569;
+    margin: 0;
+}
+
+.reports-search-box input {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #E2E8F0;
+    font-size: 13px;
+    outline: none;
+    width: 240px;
+    transition: all 0.2s;
+}
+
+.reports-search-box input:focus {
+    width: 300px;
+    border-color: #216BDE;
+}
+
+.reports-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.report-item-card {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.report-item-card:hover {
+    transform: translateY(-2px);
+    border-color: #216BDE;
+    box-shadow: 0 10px 20px -3px rgba(33, 107, 222, 0.06);
+}
+
+.report-card-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.report-card-icon-container {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #EFF6FF;
+    color: #216BDE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.report-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.report-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.report-card-id {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748B;
+}
+
+.report-card-nerve {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.report-card-meta {
+    font-size: 12px;
+    color: #64748B;
+    margin-top: 2px;
+}
+
+.report-card-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.report-card-trash-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #FEE2E2;
+    background: white;
+    color: #EF4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.report-card-trash-btn:hover {
+    background: #EF4444;
+    color: white;
+    border-color: #EF4444;
+    transform: scale(1.05);
+}
+
+/* 6. VIEW: SETTINGS SPECIFICS */
+.settings-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    box-sizing: border-box;
+}
+
+.settings-profile-card {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.settings-avatar-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(252, 211, 77, 0.3);
+}
+
+.settings-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.settings-profile-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+}
+
+.settings-clinic-name {
+    font-size: 14px;
+    color: #64748B;
+    margin: 0;
+    font-weight: 500;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+@media (max-width: 800px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.settings-col {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.settings-panel {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.settings-panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 12px;
+}
+
+.settings-panel-title svg {
+    color: #216BDE;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.settings-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.settings-form-group label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.5px;
+}
+
+.settings-form-group input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+    font-size: 13px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.settings-form-group input:focus {
+    border-color: #216BDE;
+}
+
+.settings-save-btn {
+    padding: 12px;
+    background: #216BDE;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: 'Inter', sans-serif;
+    margin-top: 8px;
+}
+
+.settings-save-btn:hover {
+    opacity: 0.9;
+}
+
+/* Switches Row Layout */
+.switch-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #F8FAFC;
+}
+
+.switch-row:last-of-type {
+    border-bottom: none;
+}
+
+.switch-label-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.switch-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.switch-desc {
+    font-size: 12px;
+    color: #64748B;
+}
+
+/* Premium iOS switch toggle */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CBD5E1;
+    transition: .3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+    background-color: #10B981;
+}
+
+.toggle-switch input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Help Support Panel details */
+.support-text {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+}
+
+.support-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.support-link-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+    background: white;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.support-link-btn:hover {
+    background: #F8FAFC;
+    color: #0F172A;
+    border-color: #CBD5E1;
+}
+
+/* Red Logout card matching the screenshot settings */
+.logout-settings-panel {
+    background: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    border-radius: 20px;
+    padding: 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #EF4444;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.02);
+}
+
+.logout-settings-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.08);
+}
+
+.logout-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logout-icon-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #FEE2E2;
+    color: #EF4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* @media print styles to export premium clinical reports as vector PDF */
+@media print {
+    body, html, .desktop-layout, .main-workspace, .content-view {
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Hide all layout structures, navigation panels, and interactive icons */
+    .sidebar, 
+    .topbar, 
+    .report-top-bar, 
+    .report-actions-row, 
+    .return-link-container, 
+    .delete-report-btn {
+        display: none !important;
+    }
+    
+    /* Center and format the medical report card nicely on A4 pages */
+    .report-wrapper {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 40px !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: white !important;
+    }
+    
+    .report-split-grid {
+        grid-template-columns: 1fr 1.2fr !important;
+        gap: 32px !important;
+    }
+    
+    .report-card {
+        box-shadow: none !important;
+        border: 1px solid #CBD5E1 !important;
+        page-break-inside: avoid !important;
+        background: white !important;
+    }
+
+    .report-surgical-note-box {
+        background: #F8FAFC !important;
+        border-left: 4px solid #10B981 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Keep the dynamic conic probability gauge visual color filled */
+    .meter-circle-large {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        box-shadow: none !important;
+    }
+}
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NeuroDent AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <a href="login.html" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+        </a>
+
+        <div class="auth-header">
+            <h1 class="login-title">Create Account</h1>
+            <p class="login-subtitle">Join NeuroDent AI for advanced diagnostics</p>
+        </div>
+
+        <form id="registerForm" class="login-form">
+            <div class="input-group">
+                <!-- User Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <input type="text" id="fullName" placeholder="Full Name" required>
+            </div>
+
+            <div class="input-group">
+                <!-- Hospital Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-2"></path><path d="M9 9h2"></path><path d="M9 13h2"></path><path d="M9 17h2"></path></svg>
+                <input type="text" id="clinicName" placeholder="Hospital / Clinic Name" required>
+            </div>
+
+            <div class="input-group">
+                <!-- Email Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+
+            <div class="input-group">
+                <!-- Lock Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit" id="signUpBtn" class="primary-btn" style="margin-top: 16px;">Create Account</button>
+            <div id="errorMessage" class="error-msg"></div>
+        </form>
+
+        <div class="register-link" style="margin-top: 48px;">
+            Already have an account? <a href="login.html">Sign in</a>
+        </div>
+    </div>
+
+    <script>
+        let API_URL = "https://oral-backend-api.onrender.com";
+
+        // Auto-detect local backend
+        fetch("http://127.0.0.1:8000/").then(() => {
+            API_URL = "http://127.0.0.1:8000";
+            console.log("Using Local API Backend:", API_URL);
+        }).catch(() => {
+            console.log("Using Cloud API Backend:", API_URL);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('signUpBtn');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            btn.textContent = 'Creating Account...';
+            btn.disabled = true;
+            errorDiv.textContent = '';
+
+            fetch(`${API_URL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    password: password,
+                    full_name: fullName
+                })
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Registration failed');
+                }
+                return response.json();
+            })
+            .then(data => {
+                btn.textContent = 'Success!';
+                setTimeout(() => {
+                    alert('Account created successfully! Please sign in.');
+                    window.location.href = 'login.html';
+                }, 600);
+            })
+            .catch(err => {
+                errorDiv.textContent = err.message + " (Server: " + API_URL + ")";
+                btn.textContent = 'Create Account';
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-multipart
+onnxruntime
+numpy
+pillow
+cachetools
+sqlalchemy
+pydantic
+passlib
+bcrypt
+psycopg2-binary
+python-dotenv

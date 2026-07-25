@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NeuroDent AI</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="desktop-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand" onclick="showView('overviewView')">
+                <div class="logo-container-small">
+                    <img src="logo.png" alt="NeuroDent AI Logo" style="width: 38px; height: 38px; border-radius: 8px; box-shadow: 0 4px 10px rgba(33, 107, 222, 0.15);">
+                </div>
+                <h2>NeuroDent AI</h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" id="menuOverview" onclick="showView('overviewView')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="menu-item" id="menuUpload" onclick="showView('newPatientView')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <span>New OPG Upload</span>
+                </a>
+                <a href="#" class="menu-item" id="menuReports" onclick="showView('reportsListView')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Patient Reports</span>
+                </a>
+                <a href="#" class="menu-item" id="menuSettings" onclick="showView('settingsView')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="menu-item" onclick="logout()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sign Out</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="doctor-profile">
+                    <div class="avatar-large">D</div>
+                    <div class="doctor-info">
+                        <span class="doc-name" id="sidebarDoctorName">Dr. Chen</span>
+                        <span class="doc-status">Online</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body Workspace -->
+        <div class="main-workspace">
+            <!-- Top Dashboard Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h3 id="workspaceTitle">Clinical Overview</h3>
+                    <p class="current-date" id="currentDateStr">May 27, 2026</p>
+                </div>
+            </header>
+
+            <div class="content-view">
+                
+                <!-- 1. VIEW: OVERVIEW (Main Dashboard) -->
+                <div id="overviewView" class="view-panel">
+                    <!-- Metrics Bar -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span class="metric-title">Total Patients</span>
+                                <div class="metric-icon-wrapper bg-blue">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                </div>
+                            </div>
+                            <div class="metric-number" id="statTotalPatients">1,284</div>
+                            <p class="metric-subtext"><span class="trend-green">↑ 12%</span> since last month</p>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span class="metric-title">Today's Patients</span>
+                                <div class="metric-icon-wrapper bg-teal">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                </div>
+                            </div>
+                            <div class="metric-number" id="statTodayPatients">4</div>
+                            <p class="metric-subtext"><span class="trend-green">↑ 4 new</span> active today</p>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span class="metric-title">High Risk Cases</span>
+                                <div class="metric-icon-wrapper bg-red">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                </div>
+                            </div>
+                            <div class="metric-number" id="statHighRisk">14%</div>
+                            <p class="metric-subtext"><span class="trend-red">⚠️ Critical</span> requiring surgery</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action & Patient List Grid -->
+                    <div class="workspace-grid">
+                        <div class="panel quick-action-panel">
+                            <h3 class="panel-title">Quick Action</h3>
+                            <div class="action-card-desktop" onclick="showView('newPatientView')">
+                                <div class="action-icon-circle">
+                                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="white" stroke-width="2" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </div>
+                                <h4>New OPG Diagnostic</h4>
+                                <p>Register a patient and analyze an OPG X-ray</p>
+                            </div>
+                        </div>
+
+                        <div class="panel table-panel">
+                            <div class="panel-header">
+                                <h3 class="panel-title">Recent Patient Reports</h3>
+                                <div class="search-box">
+                                    <input type="text" placeholder="Search patient name..." id="searchQuery" oninput="filterPatients()">
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="desktop-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient ID</th>
+                                            <th>Name</th>
+                                            <th>Age / Gender</th>
+                                            <th>Nerve Damage %</th>
+                                            <th>Risk Category</th>
+                                            <th style="text-align: right;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="patientsTableBody">
+                                        <!-- Rendered dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. VIEW: NEW PATIENT DETAILS FORM -->
+                <div id="newPatientView" class="view-panel" style="display: none;">
+                    <div class="center-form-container">
+                        <div class="desktop-form-card">
+                            <div class="form-card-header">
+                                <button class="back-arrow-btn" onclick="showView('overviewView')">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                </button>
+                                <h3>New OPG Upload</h3>
+                            </div>
+                            
+                            <form id="newPatientDetailsForm" class="patient-desktop-form">
+                                <div class="desktop-form-group">
+                                    <label>PATIENT NAME</label>
+                                    <input type="text" id="pName" placeholder="e.g. John Doe" required>
+                                </div>
+                                
+                                <div class="desktop-form-row">
+                                    <div class="desktop-form-group">
+                                        <label>AGE</label>
+                                        <input type="number" id="pAge" placeholder="Years" required>
+                                    </div>
+                                    <div class="desktop-form-group">
+                                        <label>GENDER</label>
+                                        <div class="gender-toggle-container">
+                                            <button type="button" class="gender-btn active" id="genderMale" onclick="selectGender('Male')">Male</button>
+                                            <button type="button" class="gender-btn" id="genderFemale" onclick="selectGender('Female')">Female</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="desktop-form-group">
+                                    <label>SURGEON NOTES</label>
+                                    <textarea id="pNotes" rows="4" placeholder="Add any specific observations..."></textarea>
+                                </div>
+
+                                <button type="submit" class="primary-btn submit-form-btn">Save & Continue</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. VIEW: UPLOAD X-RAY SCAN -->
+                <div id="uploadXrayView" class="view-panel" style="display: none;">
+                    <div class="center-form-container">
+                        <div class="desktop-form-card">
+                            <div class="form-card-header">
+                                <button class="back-arrow-btn" onclick="showView('newPatientView')">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                </button>
+                                <h3>Upload X-Ray</h3>
+                            </div>
+                            
+                            <div class="desktop-upload-body">
+                                <div class="desktop-dropzone" id="dropArea">
+                                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                                    <div class="dropzone-icon">
+                                        <svg viewBox="0 0 24 24" width="64" height="64" stroke="url(#blueGradient2)" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                                            <defs>
+                                                <linearGradient id="blueGradient2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                                    <stop stop-color="#216BDE" />
+                                                    <stop offset="1" stop-color="#149591" />
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <h3 class="patient-upload-header" id="patientUploadHeader">Upload OPG X-Ray</h3>
+                                    <p>Tap below to select panoramic dental image from files or drop it here</p>
+                                    
+                                    <div class="dropzone-buttons">
+                                        <button type="button" class="dropzone-btn" onclick="triggerFileSelect()">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            Files / Gallery
+                                        </button>
+                                    </div>
+                                    <div class="selected-file-name" id="selectedFileName"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. VIEW: AI DIAGNOSTIC REPORT (Premium Full-Screen Web Page style) -->
+                <div id="resultView" class="view-panel" style="display: none;">
+                    <div class="report-wrapper">
+                        <!-- Report Top Menu Bar -->
+                        <div class="report-top-bar">
+                            <div class="report-title-section">
+                                <button class="back-arrow-btn" onclick="showView('uploadXrayView')">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                </button>
+                                <h2>AI Prediction Result</h2>
+                            </div>
+                            <button class="delete-report-btn" onclick="cancelReport()" title="Discard Report">
+                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </button>
+                        </div>
+
+                        <!-- Main Two-Column Scrollable Report Grid -->
+                        <div class="report-split-grid">
+                            <!-- Left: Interactive Gauge Card -->
+                            <div class="report-left-panel">
+                                <div class="report-card meter-card-center">
+                                    <div class="meter-circle-large" id="reportMeterCircle">
+                                        <span class="meter-percentage-val" id="reportDamagePct">6%</span>
+                                        <span class="meter-percentage-sub">Probability</span>
+                                    </div>
+                                    <div class="report-badge-container">
+                                        <span class="report-status-badge badge-green" id="reportRiskBadge">Low Risk</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons row -->
+                                <div class="report-actions-row">
+                                    <button class="btn-pdf-save" onclick="triggerPDFExport()">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="white" stroke-width="2" fill="none" style="margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        Save PDF
+                                    </button>
+                                    <button class="btn-share" onclick="triggerShare()">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" style="margin-right: 8px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                                        Share
+                                    </button>
+                                </div>
+                                <div class="return-link-container">
+                                    <a href="#" class="return-dash-link" onclick="saveAndFinish()">Return to Dashboard</a>
+                                </div>
+                            </div>
+
+                            <!-- Right: Scientific Medical Data Panel -->
+                            <div class="report-right-panel">
+                                <!-- Patient Info Card -->
+                                <div class="report-card">
+                                    <h3 class="card-report-title">Patient Information</h3>
+                                    <div class="patient-profile-details">
+                                        <div class="patient-meta-item"><span class="meta-lbl">Name:</span> <span class="meta-val" id="reportPatientName">fgg</span></div>
+                                        <div class="patient-meta-item"><span class="meta-lbl">Age:</span> <span class="meta-val" id="reportPatientAge">54</span></div>
+                                        <div class="patient-meta-item"><span class="meta-lbl">Gender:</span> <span class="meta-val" id="reportPatientGender">Male</span></div>
+                                    </div>
+                                    <div class="report-surgical-note-box">
+                                        <p id="reportSurgicalNote">Surgical Note: Safe to proceed with standard extraction. Risk of IAN damage is extremely minimal.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Key AI Findings Card -->
+                                <div class="report-card">
+                                    <h3 class="card-report-title">Key AI Findings</h3>
+                                    <ul class="ai-findings-list" id="reportFindingsList">
+                                        <li>Doctor can proceed with standard extraction safely.</li>
+                                        <li>Low risk of IAN (Inferior Alveolar Nerve) damage.</li>
+                                        <li>Cortical bone density appears normal.</li>
+                                        <li>Root morphology does not indicate complex curvature.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. VIEW: PATIENT REPORTS LIST -->
+                <div id="reportsListView" class="view-panel" style="display: none;">
+                    <div class="reports-list-wrapper">
+                        <div class="reports-header-row">
+                            <h3 class="reports-count-badge" id="reportsCountText">0 Patient Reports Available</h3>
+                            <div class="reports-search-box">
+                                <input type="text" placeholder="Search reports..." id="reportsSearchQuery" oninput="filterReportsList()">
+                            </div>
+                        </div>
+                        
+                        <div class="reports-cards-grid" id="reportsCardsGrid">
+                            <!-- Loaded Dynamically in JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. VIEW: SETTINGS PAGE -->
+                <div id="settingsView" class="view-panel" style="display: none;">
+                    <div class="settings-wrapper">
+                        <!-- Profile Card with soft yellow avatar -->
+                        <div class="settings-profile-card">
+                            <div class="settings-avatar-wrapper">
+                                <svg viewBox="0 0 100 100" width="64" height="64">
+                                    <circle cx="50" cy="50" r="48" fill="#FCD34D"/>
+                                    <!-- A modern, beautiful doctor silhouette -->
+                                    <path d="M50,22 C38,22 34,32 34,42 C34,54 42,58 50,58 C58,58 66,54 66,42 C66,32 62,22 50,22 Z" fill="#475569"/>
+                                    <path d="M18,85 C18,70 30,64 50,64 C70,64 82,70 82,85 C82,88 82,90 82,90 L18,90 Z" fill="#64748B"/>
+                                    <!-- Stethoscope -->
+                                    <path d="M40,58 C40,68 60,68 60,58" stroke="#CBD5E1" stroke-width="4" fill="none"/>
+                                    <circle cx="50" cy="74" r="6" fill="#216BDE"/>
+                                </svg>
+                            </div>
+                            <div class="settings-profile-info">
+                                <h3 id="settingsDocName">Dr. simats</h3>
+                                <p class="settings-clinic-name">NeuroDent AI Diagnostic Hub</p>
+                            </div>
+                        </div>
+
+                        <!-- Settings Action Forms Grid -->
+                        <div class="settings-grid">
+                            <!-- Left: Profile & Privacy Switches -->
+                            <div class="settings-col">
+                                <div class="settings-panel">
+                                    <h4 class="settings-panel-title">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        Profile Settings
+                                    </h4>
+                                    <form id="settingsProfileForm" class="settings-form" onsubmit="saveProfileSettings(event)">
+                                        <div class="settings-form-group">
+                                            <label>DOCTOR DISPLAY NAME</label>
+                                            <input type="text" id="settingsInputDocName" required>
+                                        </div>
+                                        <div class="settings-form-group">
+                                            <label>CLINICAL SPECIALTY</label>
+                                            <input type="text" id="settingsInputSpecialty" value="Maxillofacial Surgeon" placeholder="e.g. Orthodontist">
+                                        </div>
+                                        <button type="submit" class="settings-save-btn">Save Profile Info</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-panel">
+                                    <h4 class="settings-panel-title">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                        Privacy and Sync
+                                    </h4>
+                                    <div class="switch-row">
+                                        <div class="switch-label-col">
+                                            <span class="switch-title">AI Cloud Sync</span>
+                                            <span class="switch-desc">Backup diagnostic results to clinic databases</span>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="syncToggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="switch-row">
+                                        <div class="switch-label-col">
+                                            <span class="switch-title">Auto-Save Reports</span>
+                                            <span class="switch-desc">Instantly register completed scans</span>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="autosaveToggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Security, Support & Logout -->
+                            <div class="settings-col">
+                                <div class="settings-panel">
+                                    <h4 class="settings-panel-title">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                        Security Settings
+                                    </h4>
+                                    <form id="settingsPasswordForm" class="settings-form" onsubmit="savePasswordSettings(event)">
+                                        <div class="settings-form-row">
+                                            <div class="settings-form-group">
+                                                <label>CURRENT PASSWORD</label>
+                                                <input type="password" id="oldPass" placeholder="••••••••" required>
+                                            </div>
+                                            <div class="settings-form-group">
+                                                <label>NEW PASSWORD</label>
+                                                <input type="password" id="newPass" placeholder="••••••••" required>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="settings-save-btn">Change Password</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-panel">
+                                    <h4 class="settings-panel-title">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                        Help & Technical Support
+                                    </h4>
+                                    <p class="support-text">Facing system or diagnostic speed issues? Contact our Simats hospital clinical IT support desk.</p>
+                                    <div class="support-buttons">
+                                        <a href="mailto:support@simats.edu" class="support-link-btn">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" style="margin-right: 6px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                            Email Helpdesk
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="logout-settings-panel" onclick="logout()">
+                                    <div class="logout-left">
+                                        <div class="logout-icon-circle">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+                                        </div>
+                                        <span>Logout Doctor Session</span>
+                                    </div>
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = localStorage.getItem('API_URL_CACHE') || "https://oral-backend-api.onrender.com";
+
+        // Auth enforcer
+        const doctorId = localStorage.getItem('DOCTOR_ID');
+        if (!doctorId) {
+            window.location.href = 'login.html';
+        }
+
+        let patients = [];
+
+        // Temp storage for form submission
+        let currentPatientData = {
+            name: "",
+            age: "",
+            gender: "Male",
+            notes: ""
+        };
+
+        let pendingNerveDamage = 0;
+
+        // Initialize Dashboard
+        window.addEventListener('load', () => {
+            const docName = localStorage.getItem('DOCTOR_NAME') || 'simats';
+            document.getElementById('sidebarDoctorName').textContent = 'Dr. ' + docName;
+            
+            // Bind settings profile values
+            const settingsInput = document.getElementById('settingsInputDocName');
+            const settingsName = document.getElementById('settingsDocName');
+            if (settingsInput) settingsInput.value = docName;
+            if (settingsName) settingsName.textContent = 'Dr. ' + docName;
+            
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDateStr').textContent = new Date().toLocaleDateString('en-US', options);
+            
+            fetchDashboardData();
+        });
+
+        // Fetch metrics and recent patients from live API
+        function fetchDashboardData() {
+            fetch(`${API_URL}/dashboard/${doctorId}`)
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to load dashboard metrics");
+                return res.json();
+            })
+            .then(data => {
+                // Update metrics cards
+                document.getElementById('statTotalPatients').textContent = data.total_patients;
+                document.getElementById('statTodayPatients').textContent = data.todays_patients;
+                
+                // Map API fields correctly to local rendering fields
+                patients = data.recent_activity.map(p => ({
+                    id: p.id,
+                    display_id: p.patient_id_display,
+                    name: p.name,
+                    age: p.age,
+                    gender: p.gender,
+                    nerve_damage: p.nerve_damage,
+                    risk_level: p.risk_level
+                }));
+                
+                renderPatients(patients);
+            })
+            .catch(err => {
+                console.error(err);
+                // Fallback to empty state
+                renderPatients([]);
+            });
+        }
+
+        // View Navigator
+        function showView(viewId) {
+            document.querySelectorAll('.view-panel').forEach(v => v.style.display = 'none');
+            document.getElementById(viewId).style.display = 'block';
+
+            // Menu highlights
+            document.getElementById('menuOverview').classList.remove('active');
+            document.getElementById('menuUpload').classList.remove('active');
+            document.getElementById('menuReports').classList.remove('active');
+            document.getElementById('menuSettings').classList.remove('active');
+
+            const title = document.getElementById('workspaceTitle');
+            if (viewId === 'overviewView') {
+                title.textContent = 'Clinical Overview';
+                document.getElementById('menuOverview').classList.add('active');
+            } else if (viewId === 'newPatientView') {
+                title.textContent = 'Register New Patient';
+                document.getElementById('menuUpload').classList.add('active');
+            } else if (viewId === 'uploadXrayView') {
+                title.textContent = 'Patient X-Ray Upload';
+                document.getElementById('menuUpload').classList.add('active');
+            } else if (viewId === 'resultView') {
+                title.textContent = 'AI Report Result';
+            } else if (viewId === 'reportsListView') {
+                title.textContent = 'Patient Reports';
+                document.getElementById('menuReports').classList.add('active');
+                renderReportsList(patients);
+            } else if (viewId === 'settingsView') {
+                title.textContent = 'Settings';
+                document.getElementById('menuSettings').classList.add('active');
+                const docName = localStorage.getItem('DOCTOR_NAME') || 'simats';
+                document.getElementById('settingsDocName').textContent = 'Dr. ' + docName;
+                document.getElementById('settingsInputDocName').value = docName;
+            }
+        }
+
+        function renderPatients(dataset) {
+            const tableBody = document.getElementById('patientsTableBody');
+            tableBody.innerHTML = '';
+
+            // Update stats
+            document.getElementById('statTotalPatients').textContent = patients.length;
+            const highRiskCount = patients.filter(p => p.risk_level === 'High Risk').length;
+            const highRiskPct = patients.length > 0 ? Math.round((highRiskCount / patients.length) * 100) : 0;
+            document.getElementById('statHighRisk').textContent = highRiskPct + '%';
+
+            if (dataset.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94A3B8; padding: 24px;">No patient records found.</td></tr>`;
+                return;
+            }
+
+            dataset.forEach(p => {
+                const tr = document.createElement('tr');
+                let badgeClass = 'badge-green';
+                if (p.risk_level === 'High Risk') badgeClass = 'badge-red';
+                else if (p.risk_level === 'Medium Risk') badgeClass = 'badge-yellow';
+
+                tr.innerHTML = `
+                    <td class="text-bold">${p.display_id}</td>
+                    <td class="text-primary">${p.name}</td>
+                    <td>${p.age} yrs / ${p.gender}</td>
+                    <td class="text-bold">${p.nerve_damage}%</td>
+                    <td><span class="risk-badge ${badgeClass}">${p.risk_level}</span></td>
+                    <td style="text-align: right;">
+                        <button class="delete-patient-btn" onclick="deletePatient(${p.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Search Filter
+        function filterPatients() {
+            const query = document.getElementById('searchQuery').value.toLowerCase();
+            const filtered = patients.filter(p => p.name.toLowerCase().includes(query));
+            renderPatients(filtered);
+        }
+
+        // Deletion handling
+        function deletePatient(id) {
+            if (confirm("Are you sure you want to delete this patient record?")) {
+                fetch(`${API_URL}/patients/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to delete patient record");
+                    return res.json();
+                })
+                .then(data => {
+                    fetchDashboardData();
+                })
+                .catch(err => {
+                    alert(err.message);
+                });
+            }
+        }
+
+        // Render Premium Reports List Cards
+        function renderReportsList(dataset) {
+            const cardsGrid = document.getElementById('reportsCardsGrid');
+            const countText = document.getElementById('reportsCountText');
+            
+            if (!cardsGrid || !countText) return;
+            
+            cardsGrid.innerHTML = '';
+            countText.textContent = `${dataset.length} Patient Report${dataset.length === 1 ? '' : 's'} Available`;
+            
+            if (dataset.length === 0) {
+                cardsGrid.innerHTML = `
+                    <div style="text-align: center; color: #94A3B8; padding: 48px; background: white; border-radius: 16px; border: 1px dashed #E2E8F0; width: 100%; box-sizing: border-box;">
+                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="#94A3B8" stroke-width="1.5" fill="none" style="margin-bottom: 12px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <p style="margin: 0; font-size: 14px; font-weight: 500;">No clinical patient reports available.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            dataset.forEach(p => {
+                let badgeClass = 'badge-green';
+                if (p.risk_level === 'High Risk') badgeClass = 'badge-red';
+                else if (p.risk_level === 'Medium Risk') badgeClass = 'badge-yellow';
+                
+                const card = document.createElement('div');
+                card.className = 'report-item-card';
+                card.onclick = () => viewSavedReport(p.id);
+                
+                card.innerHTML = `
+                    <div class="report-card-left">
+                        <div class="report-card-icon-container">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <div class="report-card-info">
+                            <div class="report-card-title-row">
+                                <span class="report-card-name">${p.name}</span>
+                                <span class="report-card-id">(${p.display_id})</span>
+                                <span class="risk-badge ${badgeClass}">${p.risk_level}</span>
+                            </div>
+                            <span class="report-card-nerve">Nerve damage: ${p.nerve_damage}%</span>
+                            <span class="report-card-meta">${p.age} yrs / ${p.gender}</span>
+                        </div>
+                    </div>
+                    <div class="report-card-right">
+                        <button class="report-card-trash-btn" onclick="deleteReport(${p.id}, event)" title="Delete Report">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </div>
+                `;
+                cardsGrid.appendChild(card);
+            });
+        }
+
+        // Filter reports list card search
+        function filterReportsList() {
+            const query = document.getElementById('reportsSearchQuery').value.toLowerCase();
+            const filtered = patients.filter(p => p.name.toLowerCase().includes(query));
+            renderReportsList(filtered);
+        }
+
+        // Report delete
+        function deleteReport(id, event) {
+            event.stopPropagation(); // prevent card click / view details trigger
+            if (confirm("Are you sure you want to delete this diagnostic report?")) {
+                fetch(`${API_URL}/patients/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to delete patient record");
+                    return res.json();
+                })
+                .then(data => {
+                    fetchDashboardData();
+                })
+                .catch(err => {
+                    alert(err.message);
+                });
+            }
+        }
+
+        // View single saved patient report details
+        function viewSavedReport(id) {
+            const p = patients.find(patient => patient.id === id);
+            if (!p) return;
+            
+            currentPatientData = {
+                name: p.name,
+                age: p.age,
+                gender: p.gender,
+                notes: p.notes || "No extra surgeon notes added."
+            };
+            pendingNerveDamage = p.nerve_damage;
+            
+            showResult(p.nerve_damage);
+        }
+
+        // Gender Toggles
+        function selectGender(gender) {
+            currentPatientData.gender = gender;
+            const maleBtn = document.getElementById('genderMale');
+            const femaleBtn = document.getElementById('genderFemale');
+            
+            if (gender === 'Male') {
+                maleBtn.classList.add('active');
+                femaleBtn.classList.remove('active');
+            } else {
+                femaleBtn.classList.add('active');
+                maleBtn.classList.remove('active');
+            }
+        }
+
+        // Step 1 Form Submit
+        document.getElementById('newPatientDetailsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            currentPatientData.name = document.getElementById('pName').value;
+            currentPatientData.age = document.getElementById('pAge').value;
+            currentPatientData.notes = document.getElementById('pNotes').value;
+
+            // Transition to Upload Screen
+            document.getElementById('patientUploadHeader').textContent = `Upload X-Ray for ${currentPatientData.name}`;
+            showView('uploadXrayView');
+        });
+
+        // Upload zone handlers
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('active');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+
+        function triggerFileSelect() {
+            fileInput.click();
+        }
+
+        function handleFile(file) {
+            const fileNameDiv = document.getElementById('selectedFileName');
+            fileNameDiv.textContent = `Analyzing Scan: ${file.name} (Running AI Inference)...`;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch(`${API_URL}/predict`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(async res => {
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || "ONNX Prediction failed");
+                }
+                return res.json();
+            })
+            .then(data => {
+                pendingNerveDamage = data.percentage;
+                fileNameDiv.textContent = '';
+                showResult(pendingNerveDamage);
+            })
+            .catch(err => {
+                alert(err.message);
+                fileNameDiv.textContent = '';
+            });
+        }
+
+        // Result calculations
+        function showResult(damage) {
+            document.getElementById('reportDamagePct').textContent = damage + '%';
+            document.getElementById('reportPatientName').textContent = currentPatientData.name;
+            document.getElementById('reportPatientAge').textContent = currentPatientData.age;
+            document.getElementById('reportPatientGender').textContent = currentPatientData.gender;
+
+            const badge = document.getElementById('reportRiskBadge');
+            badge.className = 'report-status-badge';
+            
+            const noteBox = document.getElementById('reportSurgicalNote');
+            const findingsList = document.getElementById('reportFindingsList');
+            const meterCircle = document.getElementById('reportMeterCircle');
+
+            let riskColor = '#10B981'; // Green default
+
+            if (damage > 60) {
+                badge.textContent = 'High Risk';
+                badge.className = 'report-status-badge badge-red';
+                noteBox.innerHTML = `<strong>Surgical Note:</strong> Critical proximity to Inferior Alveolar Nerve detected (${damage}%). High risk of nerve collision. Maxillofacial consultation and specialized surgical planning recommended.`;
+                
+                findingsList.innerHTML = `
+                    <li>Nerve damage risk is extremely high (${damage}%).</li>
+                    <li>Significant overlapping with the inferior alveolar canal.</li>
+                    <li>Surgical extraction requires caution and root division techniques.</li>
+                    <li>Consider pre-operative cone-beam computed tomography (CBCT).</li>
+                `;
+                riskColor = '#EF4444'; // Red
+            } else if (damage > 30) {
+                badge.textContent = 'Medium Risk';
+                badge.className = 'report-status-badge badge-yellow';
+                noteBox.innerHTML = `<strong>Surgical Note:</strong> Moderate proximity to Inferior Alveolar Nerve (${damage}%). Root curvature indicates partial overlap. Proceed with caution during elevators leverage.`;
+                
+                findingsList.innerHTML = `
+                    <li>Nerve damage risk is moderate (${damage}%).</li>
+                    <li>Roots are situated close to the superior border of the IAN canal.</li>
+                    <li>Standard surgical extraction is feasible but requires controlled force.</li>
+                    <li>Evaluate root anatomy details before initiating leverage.</li>
+                `;
+                riskColor = '#F59E0B'; // Orange/Yellow
+            } else {
+                badge.textContent = 'Low Risk';
+                badge.className = 'report-status-badge badge-green';
+                noteBox.innerHTML = `<strong>Surgical Note:</strong> Safe to proceed with standard extraction. Risk of IAN damage is extremely minimal (${damage}%).`;
+                
+                findingsList.innerHTML = `
+                    <li>Doctor can proceed with standard extraction safely.</li>
+                    <li>Low risk of IAN (Inferior Alveolar Nerve) damage.</li>
+                    <li>Cortical bone density appears normal.</li>
+                    <li>Root morphology does not indicate complex curvature.</li>
+                `;
+                riskColor = '#10B981'; // Green
+            }
+
+            // Update conic gradient and box-shadow dynamically
+            if (meterCircle) {
+                meterCircle.style.background = `conic-gradient(${riskColor} 0%, ${riskColor} ${damage}%, #F1F5F9 ${damage}% 100%)`;
+                meterCircle.style.boxShadow = `0 10px 20px ${riskColor}1A`; // dynamic transparency
+            }
+
+            showView('resultView');
+        }
+
+        // Final Save & Reset to Overview
+        function saveAndFinish() {
+            fetch(`${API_URL}/patients`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    doctor_id: parseInt(doctorId),
+                    name: currentPatientData.name,
+                    age: parseInt(currentPatientData.age),
+                    gender: currentPatientData.gender,
+                    nerve_damage: parseFloat(pendingNerveDamage)
+                })
+            })
+            .then(async res => {
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || "Failed to save patient report");
+                }
+                return res.json();
+            })
+            .then(data => {
+                // Reset inputs
+                document.getElementById('newPatientDetailsForm').reset();
+                currentPatientData = { name: "", age: "", gender: "Male", notes: "" };
+                selectGender('Male');
+                
+                fetchDashboardData();
+                showView('overviewView');
+            })
+            .catch(err => {
+                alert(err.message);
+            });
+        }
+
+        // Cancel / Discard report
+        function cancelReport() {
+            if (confirm("Discard this diagnostic report? No data will be saved.")) {
+                document.getElementById('newPatientDetailsForm').reset();
+                currentPatientData = { name: "", age: "", gender: "Male", notes: "" };
+                selectGender('Male');
+                showView('overviewView');
+            }
+        }
+
+        // Helper notification actions
+        function triggerPDFExport() {
+            window.print();
+        }
+
+        function triggerShare() {
+            if (navigator.share) {
+                navigator.share({
+                    title: `NeuroDent AI Diagnostic - ${currentPatientData.name}`,
+                    text: `AI Nerve Collision Probability Report for ${currentPatientData.name}: ${pendingNerveDamage}%. Risk level: ${pendingNerveDamage > 60 ? 'High Risk' : (pendingNerveDamage > 30 ? 'Medium Risk' : 'Low Risk')}.`,
+                    url: window.location.href
+                }).catch(err => {
+                    console.log("Share failed or cancelled:", err);
+                });
+            } else {
+                alert(`Share Clinical Details:\n\nPatient Name: ${currentPatientData.name}\nAge/Gender: ${currentPatientData.age} / ${currentPatientData.gender}\nNerve Collision Risk: ${pendingNerveDamage}%\n\n(Tip: Save as PDF to email/share full clinical vector document!)`);
+            }
+        }
+
+        // Save Profile settings
+        function saveProfileSettings(event) {
+            event.preventDefault();
+            const newName = document.getElementById('settingsInputDocName').value.trim();
+            if (newName) {
+                localStorage.setItem('DOCTOR_NAME', newName);
+                document.getElementById('sidebarDoctorName').textContent = 'Dr. ' + newName;
+                document.getElementById('settingsDocName').textContent = 'Dr. ' + newName;
+                alert("Doctor profile settings saved successfully!");
+            }
+        }
+
+        // Save password settings
+        function savePasswordSettings(event) {
+            event.preventDefault();
+            const newPass = document.getElementById('newPass').value;
+            const email = localStorage.getItem('DOCTOR_EMAIL') || 'admin@neurodent.ai';
+
+            if (newPass.length < 4) {
+                alert("New password must be at least 4 characters.");
+                return;
+            }
+
+            fetch(`${API_URL}/reset-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    new_password: newPass
+                })
+            })
+            .then(async res => {
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || "Failed to update password");
+                }
+                return res.json();
+            })
+            .then(data => {
+                alert("Password updated successfully!");
+                document.getElementById('settingsPasswordForm').reset();
+            })
+            .catch(err => {
+                alert(err.message);
+            });
+        }
+
+        // Logout
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NeuroDent AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="logo-small">
+            <img src="logo.png" alt="NeuroDent AI Logo" style="width: 80px; height: 80px; border-radius: 16px; box-shadow: 0 4px 15px rgba(33, 107, 222, 0.15); margin-bottom: 16px;">
+        </div>
+
+        <h1 class="login-title">Welcome Back, Doctor</h1>
+        <p class="login-subtitle">Sign in to access patient analyses</p>
+
+        <form id="loginForm" class="login-form">
+            <div class="input-group">
+                <!-- SVG Envelope Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <input type="email" id="email" placeholder="dr.chen@westview.edu" required>
+            </div>
+
+            <div class="input-group">
+                <!-- SVG Lock Icon -->
+                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" id="signInBtn" class="primary-btn">Sign In</button>
+            <div id="errorMessage" class="error-msg"></div>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Register</a>
+        </div>
+    </div>
+
+    <script>
+        let API_URL = "https://oral-backend-api.onrender.com";
+
+        // Auto-detect local backend
+        fetch("http://127.0.0.1:8000/").then(() => {
+            API_URL = "http://127.0.0.1:8000";
+            console.log("Using Local API Backend:", API_URL);
+        }).catch(() => {
+            console.log("Using Cloud API Backend:", API_URL);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('signInBtn');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            btn.textContent = 'Signing In...';
+            btn.disabled = true;
+            errorDiv.textContent = '';
+
+            const params = new URLSearchParams();
+            params.append('username', email);
+            params.append('password', password);
+
+            fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params
+            })
+            .then(async response => {
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.detail || 'Incorrect email or password');
+                }
+                return response.json();
+            })
+            .then(data => {
+                localStorage.setItem('DOCTOR_ID', data.id);
+                localStorage.setItem('DOCTOR_NAME', data.username);
+                localStorage.setItem('DOCTOR_EMAIL', email);
+                localStorage.setItem('API_URL_CACHE', API_URL); // cache it for dashboard
+                
+                btn.textContent = 'Success!';
+                
+                setTimeout(() => {
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.4s ease';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 400);
+                }, 400);
+            })
+            .catch(err => {
+                errorDiv.textContent = err.message + " (Server: " + API_URL + ")";
+                btn.textContent = 'Sign In';
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
